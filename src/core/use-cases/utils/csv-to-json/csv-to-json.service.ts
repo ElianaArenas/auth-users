@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CsvParser } from '@jynnantonnyx/nest-csv-parser'
+import { CsvParser, ParsedData } from '@jynnantonnyx/nest-csv-parser'
+import { Readable } from 'stream';
 
-class Entity {
+class Clients {
   dni: number;
   client_name: string;
   email: string;
@@ -17,16 +18,38 @@ export class CsvToJsonService {
 
   constructor(
     private readonly csvParser: CsvParser
-  ) {}
+  ) { }
 
-  async parse(body:any) {
 
-    // const stream = fs.createReadStream(__dirname + '/some.csv');
-    const  data = await this.csvParser.parse(body, Entity);
-    const entities: Entity[] = data.list;
+  /**
+  * Convert Buffer to Stream
+  * @param { Buffer } binary 
+  * @returns { Readable } readableInstanceStream Readable
+  */
+  bufferToStream(binary: Buffer) {
 
-    
-    const headers: string[] = data.headers;
+    const readableInstanceStream = new Readable({
+      read() {
+        this.push(binary);
+        this.push(null);
+      }
+    });
+
+    return readableInstanceStream;
+  }
+
+
+  /**
+   * Parse csv file to json Array
+   * @param { Buffer } csv 
+   * @returns { Array<JSON> } A json Array
+   */
+  async parse(csv: Buffer) {
+
+    const stream = this.bufferToStream(csv);
+
+    const data: ParsedData<Clients> = await this.csvParser.parse(stream, Clients, null, null, { separator: ',' });
+    const entities: Clients[] = data.list;
 
     return entities;
   }

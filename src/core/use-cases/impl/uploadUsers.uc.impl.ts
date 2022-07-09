@@ -15,13 +15,17 @@ export class UploadUsersCase implements UploadUsersUseCase {
     private readonly _csvToJson: CsvToJsonService
   ) { }
 
+
   async uploadUsers(csv:Buffer): Promise<any> {
     
     const clients = await this._csvToJson.parse(csv);
+
+    console.log(clients);
     
-    for (const client of clients) {
+    
+    // for (const client of clients) {
       
-    }
+    // }
     
   }
 
