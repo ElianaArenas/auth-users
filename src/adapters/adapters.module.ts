@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CoreModule } from '../core/core.module';
+import { ClientController } from './api/client.controller';
 import { UserController } from './api/user.controller';
 
 @Module({
@@ -7,7 +8,8 @@ import { UserController } from './api/user.controller';
     CoreModule
   ],
   controllers:[
-    UserController
+    UserController,
+    ClientController
   ]
 })
 export class AdaptersModule {}

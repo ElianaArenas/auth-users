@@ -16,26 +16,25 @@ export class UserDriver implements IUserDriver {
 
   
   async create(data: any): Promise<any> {
-    const user = await this._userRepository.save({
+    return await this._userRepository.save({
       ...data,
     })
-    return user
   }
 
-  async find(username:string): Promise<any> {
-    return await this._userRepository.findOneBy({username})
+  async get(id:number): Promise<any> {
+    return await this._userRepository.findOneBy({id})
   }
 
-  async findAll(): Promise<any> {
+  async getAll(): Promise<any> {
     return await this._userRepository.find();
   }
   
-  async update(username,data: any): Promise<any> {
-    return await this._userRepository.update({username},data)
+  async update(id,data: any): Promise<any> {
+    return await this._userRepository.update({id},data)
   }
 
-  async delete(username): Promise<any> {
-    return await this._userRepository.delete({username})
+  async delete(id): Promise<any> {
+    return await this._userRepository.delete({id})
   }
 
 }

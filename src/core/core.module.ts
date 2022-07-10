@@ -5,8 +5,8 @@ import { UserUseCase } from './use-cases/user.uc';
 import { ClientUseCase } from './use-cases/client.uc';
 import { ClientCase } from './use-cases/impl/client.uc.impl';
 import { CsvToJsonModule } from './use-cases/utils/csv-to-json/csv-to-json.module';
-import { UploadUsersUseCase } from './use-cases/uploadUsers.uc';
-import { UploadUsersCase } from './use-cases/impl/uploadUsers.uc.impl';
+import { UploadClientsUseCase } from './use-cases/uploadClients.uc';
+import { UploadClientsCase } from './use-cases/impl/uploadClients.uc.impl';
 import { CsvToJsonService } from './use-cases/utils/csv-to-json/csv-to-json.service';
 import { CsvParser } from '@jynnantonnyx/nest-csv-parser';
 
@@ -18,14 +18,15 @@ import { CsvParser } from '@jynnantonnyx/nest-csv-parser';
   providers:[
     {provide: UserUseCase, useClass: UserCase},
     {provide: ClientUseCase, useClass: ClientCase},
-    {provide: UploadUsersUseCase, useClass: UploadUsersCase},
+    {provide: UploadClientsUseCase, useClass: UploadClientsCase},
     CsvToJsonService,
     CsvParser
   ],
   exports: [
     DriversModule,
     UserUseCase,
-    UploadUsersUseCase,
+    ClientUseCase,
+    UploadClientsUseCase,
     CsvToJsonModule
   ]
 })

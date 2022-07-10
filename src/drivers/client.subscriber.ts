@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-
 import {
   EntitySubscriberInterface,
   EventSubscriber,
@@ -19,22 +18,23 @@ export class ClientSubscriber implements EntitySubscriberInterface<Client> {
 
   async afterInsert(event: InsertEvent<Client>) {
 
-    
-    await event.manager.getRepository(User)
-    .createQueryBuilder()
+    try {
+      //After a client is created a user is created
+      await event.manager.getRepository(User)
+        .createQueryBuilder()
         .insert()
         .into(User)
         .values({
-          username: `prueba${event.entity.dni}`,
-          password:"frererds",
-          role:"client",
+          username: `user${event.entity.dni}`,
+          password: `Mwvsd.${Math.random()}452_`,
+          role: "client",
           client: event.entity.dni
-      })
+        })
         .execute()
-    
-    // console.log(event.entity.dni);
-    
-    
+    } catch (error) {
+      throw new Error(error);
+    }
+
 
   }
 

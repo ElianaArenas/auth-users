@@ -3,45 +3,48 @@ import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Client } from '../schemas'
 import { IClientDriver } from '../client-type.driver'
+import { UtilsService } from '../utils/utils.service';
 
 
 export class ClientDriver implements IClientDriver {
 
   constructor(
     @InjectRepository(Client)
-    private readonly _clientRepository: Repository<Client>
+    private readonly _clientRepository: Repository<Client>,
+    private utilsService: UtilsService
   ) { }
 
 
   async create(data: any) {
-
-    const getArrayAsChunks = (array, chunkSize) => {
-      let result = [];
-      let data = array.slice(0);
-      while (data[0]) {
-        result.push(data.splice(0, chunkSize));
-      }
-      return result;
-    };
-
-    const chunksArray = getArrayAsChunks(data, 50);
-
-    chunksArray.map(async oneChunk => {
-      await this._clientRepository
-        .createQueryBuilder()
-        .insert()
-        .into(Client)
-        .values(oneChunk.map(item => item))
-        .execute();
-    });
-
+    return await this._clientRepository.save(data);
   }
 
-  async find(id: any): Promise<any> {
+  async createMany(data: any[]): Promise<any> {
+    try {
+      let chunksArray = this.utilsService.getArrayAsChunks(data, 50);
+
+      chunksArray.map(async oneChunk => {
+        await this._clientRepository
+          .createQueryBuilder()
+          .insert()
+          .into(Client)
+          .values(oneChunk.map(item => item))
+          .execute();
+      });
+  
+      return 'Clients created Successfully'
+    } catch (error) {
+      throw new Error(error);
+    }
+   
+  }
+
+
+  async get(id: any): Promise<any> {
     return await this._clientRepository.findOneBy({ dni: id })
   }
 
-  async findAll(): Promise<any> {
+  async getAll(): Promise<any> {
     return await this._clientRepository.find();
   }
 

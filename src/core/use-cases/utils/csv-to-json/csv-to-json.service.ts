@@ -42,9 +42,9 @@ export class CsvToJsonService {
   /**
    * Parse csv file to json Array
    * @param { Buffer } csv 
-   * @returns { Array<JSON> } A json Array
+   * @returns { Promise<Array<{}>> } A json Array
    */
-  async parse(csv: Buffer) {
+  async parse(csv: Buffer): Promise<Array<{}>> {
 
     const stream = this.bufferToStream(csv);
 

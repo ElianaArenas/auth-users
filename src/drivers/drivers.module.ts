@@ -7,6 +7,7 @@ import { UserDriver } from './impl/user-type.driver.impl';
 import { IClientDriver } from './client-type.driver';
 import { ClientDriver } from './impl/client-type.driver.impl';
 import { ClientSubscriber } from './client.subscriber';
+import { UtilsService } from './utils/utils.service';
 
 @Module({
   imports: [
@@ -16,11 +17,12 @@ import { ClientSubscriber } from './client.subscriber';
   providers: [
     { provide: IUserDriver, useClass: UserDriver },
     { provide: IClientDriver, useClass: ClientDriver },
-    ClientSubscriber
+    UtilsService,
+    ClientSubscriber,
   ],
   exports:[
     IUserDriver,
-    IClientDriver
+    IClientDriver,
   ]
 })
 export class DriversModule { }

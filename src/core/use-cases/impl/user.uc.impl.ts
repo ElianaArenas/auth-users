@@ -16,22 +16,19 @@ export class UserCase implements UserUseCase {
   }
 
   async getUser(id: any): Promise<any> {
-    const user = await this._userDriver.find(id);
-    return user;
+    return await this._userDriver.get(id);
   }
 
   async getAllUsers(): Promise<any> {
-    const users = await this._userDriver.findAll();
-    return users;
+    return await this._userDriver.getAll();
   }
 
   async updateUser(id: any, data: any): Promise<any> {
-    const user = await this._userDriver.update(id,data);
-    return user;
+    return await this._userDriver.update(id,data);
   }
 
   async deleteUser(id:any): Promise<any> {
-    const user = await this._userDriver.delete(id);
-    return user;
+    return await this._userDriver.delete(id);
   }
+
 }

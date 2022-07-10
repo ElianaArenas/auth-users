@@ -1,33 +1,9 @@
 import { plainToInstance } from 'class-transformer'
 import {
-    IsEnum,
     IsNumber, IsString, validateSync
-} from 'class-validator'
-
-enum Environment {
-    Development = 'development',
-    Production = 'production',
-    Local = 'local',
-    Test = 'test',
-}
+} from 'class-validator';
 
 class EnviromentVariables {
-
-    //-----------TOKEN--------------
-    @IsEnum(Environment)
-    NODE_ENV: Environment;
-
-    @IsString()
-    JWT_SECRET: string;
-
-    @IsString()
-    JWT_EXPIRATION_TIME: string;
-
-    @IsString()
-    JWT_REFRESH_TOKEN_SECRET: string;
-
-    @IsString()
-    JWT_REFRESH_TOKEN_EXPIRATION_TIME: string;
 
     //------------APP------------------
     @IsNumber()
@@ -47,7 +23,20 @@ class EnviromentVariables {
     DATABASE: string
 
     @IsNumber()
-    DATABASE_PORT: number;
+    DATABASE_PORT: number
+
+    //-----------TOKEN--------------
+    @IsString()
+    JWT_SECRET: string
+
+    @IsString()
+    JWT_EXPIRATION_TIME: string
+
+    @IsString()
+    JWT_REFRESH_TOKEN_SECRET: string
+
+    @IsString()
+    JWT_REFRESH_TOKEN_EXPIRATION_TIME: string
 
 }
 
@@ -61,7 +50,7 @@ export const validate = (config: Record<string, unknown>) => {
         skipMissingProperties: false
     })
 
-    if (errors.length > 0) {      
+    if (errors.length > 0) {
         throw new Error(`.env is not defined`)
     }
 

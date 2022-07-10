@@ -24,7 +24,8 @@ export const databaseProviders = [
       subscribers: [ClientSubscriber],
       pool: {
         max: 500,
-        min: 0,
+        min: 1,
+        idleTimeoutMillis:50,
       },
       logging: true,
     } as DataSourceOptions)
