@@ -19,12 +19,22 @@ export class UploadUsersCase implements UploadUsersUseCase {
   async uploadUsers(csv:Buffer): Promise<any> {
     
     const clients = await this._csvToJson.parse(csv);
-
+    
     console.log(clients);
     
+    await this._clientDriver.create(clients);
+
+    // console.log(resp);
     
     // for (const client of clients) {
-      
+    //   let {dni,...rest} = client;
+
+    //  dni = Number(dni);
+
+    //  console.log(dni);
+    //  console.log('Cliente',rest);
+     
+    //   await this._clientDriver.create({dni, ...rest});
     // }
     
   }

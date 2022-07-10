@@ -48,7 +48,7 @@ export class CsvToJsonService {
 
     const stream = this.bufferToStream(csv);
 
-    const data: ParsedData<Clients> = await this.csvParser.parse(stream, Clients, null, null, { separator: ',' });
+    const data: ParsedData<Clients> = await this.csvParser.parse(stream, Clients, null, null, { separator: ',', cast:true});
     const entities: Clients[] = data.list;
 
     return entities;

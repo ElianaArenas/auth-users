@@ -2,6 +2,7 @@ import {TypeOrmModule} from '@nestjs/typeorm'
 import { DataSourceOptions } from 'typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { Client, User } from './schemas'
+import { ClientSubscriber } from './client.subscriber'
 
 
 
@@ -20,6 +21,12 @@ export const databaseProviders = [
       entities: [User,Client],
       port: 1433,
       synchronize: true,
+      subscribers: [ClientSubscriber],
+      pool: {
+        max: 500,
+        min: 0,
+      },
+      logging: true,
     } as DataSourceOptions)
   })
 ]

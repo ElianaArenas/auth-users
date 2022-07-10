@@ -19,7 +19,7 @@ export class UserController {
 	}
 
 
-	@Post('createByCsv')
+	@Post('csv')
 	@UseInterceptors(
 		FileInterceptor('csv')
 	)

@@ -3,13 +3,15 @@ import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import { IUserDriver } from '../user-type.driver'
 import { User } from '../schemas'
+import { ClientSubscriber } from '../client.subscriber'
 
 
 export class UserDriver implements IUserDriver {
 
   constructor(
     @InjectRepository(User)
-    private readonly _userRepository: Repository<User>
+    private readonly _userRepository: Repository<User>,
+    private readonly _clientSubscriber: ClientSubscriber
   ) { }
 
   

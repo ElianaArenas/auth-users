@@ -29,5 +29,5 @@ export class User {
 			cascade: true,
 		})
 	@JoinColumn()
-	dni: number;
+	client: number;
 }
